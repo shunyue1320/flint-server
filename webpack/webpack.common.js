@@ -8,7 +8,7 @@ module.exports = {
         rules: [
             {
                 test: /\.ts$/,
-                    use: [
+                use: [
                     {
                         loader: "ts-loader",
                         options: {
@@ -17,15 +17,15 @@ module.exports = {
                     },
                 ],
                 exclude: /node_modules/,
-            }
-        ]
+            },
+        ],
     },
     externals: [nodeExternals()],
     resolve: {
-        extensions: [".js", ".ts"]
+        extensions: [".js", ".ts"],
     },
     output: {
         filename: "index.js",
         path: paths.dist,
     },
-}
+};

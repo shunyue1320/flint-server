@@ -4,5 +4,5 @@ const resolvePath = (...relativePath) => path.resolve(__dirname, "..", ...relati
 
 module.exports = {
     dist: resolvePath("dist"),
-    entryFile: resolvePath("src", "index.ts")
-}
+    entryFile: resolvePath("src", "index.ts"),
+};
