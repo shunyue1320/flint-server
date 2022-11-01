@@ -3,7 +3,7 @@ const nodeExternals = require("webpack-node-externals");
 
 module.exports = {
     entry: [paths.entryFile],
-    target: "node",
+    target: "node", // 排除诸如path、fs等内置模块。
     module: {
         rules: [
             {
@@ -20,7 +20,7 @@ module.exports = {
             },
         ],
     },
-    externals: [nodeExternals()],
+    externals: [nodeExternals()], // 排除 node_modules 目录中所有模块
     resolve: {
         extensions: [".js", ".ts"],
     },
