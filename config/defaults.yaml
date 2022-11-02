@@ -1,3 +1,10 @@
 server:
   port: 80
   env: dev
+
+mysql:
+  host: 127.0.0.1
+  port: 7519
+  username: root
+  password: flat-server-test
+  db: flat_server

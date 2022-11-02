@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "fastify": "^4.9.2",
-        "js-yaml": "^4.1.0"
+        "js-yaml": "^4.1.0",
+        "typeorm": "^0.3.10"
     }
 }

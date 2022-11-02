@@ -18,10 +18,18 @@ const configPath = (() => {
 
 const yamlContent = fs.readFileSync(configPath, "utf8");
 
-export const conifg = yaml.load(yamlContent) as Config;
+export const config = yaml.load(yamlContent) as Config;
 
 type Config = {
     server: {
         port: number;
+        env: string;
+    };
+    mysql: {
+        host: string;
+        port: number;
+        username: string;
+        password: string;
+        db: string;
     };
 };
