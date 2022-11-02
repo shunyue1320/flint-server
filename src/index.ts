@@ -5,6 +5,10 @@ const app = fastify({
     caseSensitive: true,
 });
 
+app.get("/health-check", async (_req, reply) => {
+    return reply.code(200).send();
+});
+
 app.listen(
     {
         port: Server.port,
