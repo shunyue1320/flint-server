@@ -1,5 +1,5 @@
 import { DataSource } from "typeorm";
-import { MySQL } from "../constants/Config";
+import { MySQL, isDev, isTest } from "../constants/Config";
 
 export const dataSource = new DataSource({
     type: "mysql",
@@ -9,6 +9,13 @@ export const dataSource = new DataSource({
     password: MySQL.password,
     database: MySQL.db,
     entities: [],
+    extra: {
+        connectionLimit: isTest ? 50 : 10,
+    },
+    timezone: "Z",
+    logging: !isTest && isDev ? "all" : false,
+    maxQueryExecutionTime: !isTest && isDev ? 1 : 1000,
+    charset: "utf8mb4_unicode_ci",
 });
 
 export const orm = (): Promise<DataSource> => {

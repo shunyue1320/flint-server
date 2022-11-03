@@ -1,6 +1,9 @@
 import packages from "../../package.json";
 import { config } from "../utils/ParseConfig";
 
+export const isDev = process.env.NODE_ENV === "development";
+export const isTest = process.env.IS_TEST === "yes";
+
 export const Server = {
     port: config.server.port,
     name: "flint-server",
