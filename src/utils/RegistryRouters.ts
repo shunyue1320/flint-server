@@ -23,7 +23,7 @@ const registerRouters =
                 if (!enable) {
                     return;
                 }
-
+                console.log("=======", method, `/${version}/${path}`);
                 fastifyServer[method](
                     `/${version}/${path}`,
                     {
@@ -41,7 +41,7 @@ const registerRouters =
                         const request = Object.assign(req, {
                             userUUID: req?.user?.userUUID,
                             loginSource: req?.user?.loginSource,
-                            DBTransaction: req.queryRunner.manager,
+                            // DBTransaction: req.queryRunner.manager,
                         });
 
                         try {

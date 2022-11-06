@@ -3,7 +3,7 @@ export enum Status {
     Success,
     Failed,
     Process,
-    AUthFailed,
+    AuthFailed,
 }
 
 export enum Gender {

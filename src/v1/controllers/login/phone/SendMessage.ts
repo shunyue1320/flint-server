@@ -1,20 +1,24 @@
 import { Type } from "@sinclair/typebox";
+import { FastifyRequestTypebox, Response } from "../../../../types/Server";
+import { successJSON } from "../../internal/utils/response-json";
 
 export const sendMessageSchema = {
     body: Type.Object({
-        required: ["phone"],
-        properties: {
-            phone: {
-                type: "string",
-                format: "phone",
-            },
-        },
+        phone: Type.String({
+            format: "phone",
+        }),
     }),
 };
 
-export const sendMessage = async () => {
-    return {
-        status: 0,
-        data: {},
-    };
+export const sendMessage = async (
+    req: FastifyRequestTypebox<typeof sendMessageSchema>,
+): Promise<Response> => {
+    const { phone } = req.body;
+    // cnost sms = new SMS(phone)
+    // return {
+    //     status: 0,
+    //     data: {},
+    // };
+
+    return successJSON({ phone });
 };

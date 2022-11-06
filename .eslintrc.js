@@ -11,5 +11,10 @@ module.exports = {
         "plugin:prettier/recommended",
         "prettier",
     ],
+    rules: {
+        "@typescript-eslint/no-explicit-any": ["off"],
+        "@typescript-eslint/no-unsafe-member-access": ["off"],
+        "@typescript-eslint/no-unsafe-assignment": ["off"],
+    },
     root: true,
 };
