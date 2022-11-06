@@ -2,12 +2,15 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": true,
-      "source.addMissingImports": true
+        "source.fixAll.eslint": true,
+        "source.addMissingImports": true
     },
     "eslint.enable": true,
-    "eslint.format.enable": true,
-  }
+    "eslint.format.enable": true
+}

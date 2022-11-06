@@ -3,13 +3,13 @@ module.exports = {
     parserOptions: {
         project: "./tsconfig.json",
     },
-    plugins: ["prettier", "@typescript-eslint"],
+    plugins: ["@typescript-eslint", "prettier"],
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking",
-        "prettier",
         "plugin:prettier/recommended",
+        "prettier",
     ],
     root: true,
 };

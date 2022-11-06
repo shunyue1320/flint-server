@@ -2,7 +2,7 @@ import { Column, PrimaryGeneratedColumn, VersionColumn } from "typeorm";
 
 export abstract class Content {
     @PrimaryGeneratedColumn({
-        type: "bugint",
+        type: "bigint",
     })
     id: number;
 
