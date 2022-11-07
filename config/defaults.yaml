@@ -8,3 +8,13 @@ mysql:
   username: root
   password: flat-server-test
   db: flat_server
+
+login:
+  sms:
+    enable: false
+    force: false
+    chinese_mainland:
+      access_id:
+      access_secret:
+      template_code:
+      sign_name:

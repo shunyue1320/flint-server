@@ -9,6 +9,10 @@ export class SMSUtils {
         return phone.startsWith("+86");
     }
 
+    public static safePhone(phone: string): string {
+        return phone.match(/\d+/g)!.join("");
+    }
+
     public static verificationCode(): string {
         const code = SMSUtils.nanoID();
         // 避免验证码第一项等于0
