@@ -5,7 +5,7 @@ import {
     RawServerDefault,
     RawRequestDefaultExpression,
     RawReplyDefaultExpression,
-    FastifyLoggerInstance,
+    FastifyBaseLogger,
 } from "fastify";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { EntityManager } from "typeorm";
@@ -22,16 +22,18 @@ export type ResponseSuccess<T = any> = {
     data: T;
 };
 
-export type Response<T = any> = {
-    status: Status.Success;
-    data: T;
-};
+export type Response<T = any> =
+    | ResponseError
+    | ResponseSuccess<T>
+    | {
+          status: Status.Process;
+      };
 
 export type FastifyInstance<S extends RawServerDefault = RawServerDefault> = FI<
     S,
     RawRequestDefaultExpression<S>,
     RawReplyDefaultExpression<S>,
-    FastifyLoggerInstance,
+    FastifyBaseLogger,
     TypeBoxTypeProvider
 >;
 

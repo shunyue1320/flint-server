@@ -1,5 +1,8 @@
 import { FastifyReply } from "fastify";
+import { Status } from "../constants/Project";
 import { FastifyInstance, FastifyRequestTypebox, Response } from "../types/Server";
+import { ErrorCode } from "../ErrorCode";
+import { FError } from "../error/ControllerError";
 
 const registerRouters =
     (version: `v${number}`) =>
@@ -7,7 +10,7 @@ const registerRouters =
         const routerHandle = (method: "get" | "post"): Router => {
             return <S>(
                 path: string,
-                hander: (req: FastifyRequestTypebox<S>, reply: FastifyReply) => Promise<any>,
+                handler: (req: FastifyRequestTypebox<S>, reply: FastifyReply) => Promise<any>,
                 config: {
                     auth?: boolean;
                     schema: S;
@@ -23,7 +26,7 @@ const registerRouters =
                 if (!enable) {
                     return;
                 }
-                console.log("=======", method, `/${version}/${path}`);
+
                 fastifyServer[method](
                     `/${version}/${path}`,
                     {
@@ -45,13 +48,13 @@ const registerRouters =
                         });
 
                         try {
-                            const result = await hander(request, reply);
+                            const result = await handler(request, reply);
                             if (autoHandle) {
                                 resp = result as Response;
                             }
                         } catch (error) {
                             if (autoHandle) {
-                                resp = error as Error;
+                                resp = errorToResp(error as Error);
                             } else {
                                 throw error;
                             }
@@ -75,6 +78,20 @@ const registerRouters =
             controller(server);
         });
     };
+
+const errorToResp = (error: Error): Response => {
+    if (error instanceof FError) {
+        return {
+            status: error.status,
+            code: error.errorCode,
+        };
+    } else {
+        return {
+            status: Status.Failed,
+            code: ErrorCode.CurrentProcessFailed,
+        };
+    }
+};
 
 export const registerRoutersV1 = registerRouters("v1");
 export const registerRoutersV2 = registerRouters("v2");
