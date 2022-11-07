@@ -18,3 +18,12 @@ export const MySQL = {
     password: config.mysql.password,
     db: config.mysql.db,
 };
+
+export const PhoneSMS = {
+    chineseMainland: {
+        accessId: config.login.sms.chinese_mainland.access_id,
+        accessSecret: config.login.sms.chinese_mainland.access_secret,
+        templateCode: config.login.sms.chinese_mainland.template_code,
+        signName: config.login.sms.chinese_mainland.sign_name,
+    },
+};

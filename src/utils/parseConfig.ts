@@ -32,4 +32,16 @@ type Config = {
         password: string;
         db: string;
     };
+    login: {
+        sms: {
+            chinese_mainland: SMSConfig;
+        };
+    };
 };
+
+interface SMSConfig {
+    access_id: string;
+    access_secret: string;
+    template_code: string;
+    sign_name: string;
+}
