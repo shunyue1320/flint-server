@@ -32,6 +32,14 @@ type Config = {
         password: string;
         db: string;
     };
+    redis: {
+        host: string;
+        port: number;
+        username: string | null;
+        password: string;
+        db: number;
+        queueDB: number;
+    };
     login: {
         sms: {
             chinese_mainland: SMSConfig;

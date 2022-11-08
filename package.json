@@ -36,6 +36,7 @@
         "ajv": "^8.11.0",
         "awesome-phonenumber": "^3.4.0",
         "fastify": "^4.9.2",
+        "ioredis": "^5.2.4",
         "js-yaml": "^4.1.0",
         "mysql2": "^2.3.3",
         "nanoid": "^4.0.0",

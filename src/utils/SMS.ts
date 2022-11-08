@@ -1,4 +1,4 @@
-import OpenApi from "@alicloud/openapi-client";
+import * as OpenApi from "@alicloud/openapi-client";
 import Dysmsapi20170525 from "@alicloud/dysmsapi20170525";
 import { customAlphabet } from "nanoid";
 import { PhoneSMS } from "../constants/Config";

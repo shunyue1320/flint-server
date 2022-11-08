@@ -19,6 +19,15 @@ export const MySQL = {
     db: config.mysql.db,
 };
 
+export const Redis = {
+    host: config.redis.host,
+    port: config.redis.port,
+    username: config.redis.username || "",
+    password: config.redis.password,
+    db: config.redis.db,
+    queueDB: config.redis.queueDB,
+};
+
 export const PhoneSMS = {
     chineseMainland: {
         accessId: config.login.sms.chinese_mainland.access_id,

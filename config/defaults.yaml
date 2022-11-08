@@ -9,6 +9,14 @@ mysql:
   password: flat-server-test
   db: flat_server
 
+redis:
+  host:
+  port:
+  username:
+  password:
+  db:
+  queueDB:
+
 login:
   sms:
     enable: false
