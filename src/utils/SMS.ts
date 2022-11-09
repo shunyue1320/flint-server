@@ -33,6 +33,22 @@ class SMSClients {
                 endpoint: "dysmsapi.aliyuncs.com",
             }),
         ),
+        /** 中国香港、澳门和台湾地区 */
+        hmt: new Dysmsapi20170525(
+            new OpenApi.Config({
+                accessKeyId: PhoneSMS.hmt.accessId,
+                accessKeySecret: PhoneSMS.hmt.accessSecret,
+                endpoint: "dysmsapi.aliyuncs.com",
+            }),
+        ),
+        /** 全球短信 */
+        global: new Dysmsapi20170525(
+            new OpenApi.Config({
+                accessKeyId: PhoneSMS.global.accessId,
+                accessKeySecret: PhoneSMS.global.accessSecret,
+                endpoint: "dysmsapi.aliyuncs.com",
+            }),
+        ),
     };
     public constructor(private phone: string) {}
     public client(): Dysmsapi20170525 {

@@ -26,3 +26,14 @@ login:
       access_secret:
       template_code:
       sign_name:
+    # hmt: 中国香港、澳门和台湾地区
+    hmt:
+      access_id:
+      access_secret:
+      template_code:
+      sign_name:
+    global:
+      access_id:
+      access_secret:
+      template_code:
+      sign_name:

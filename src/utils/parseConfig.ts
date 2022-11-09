@@ -43,6 +43,8 @@ type Config = {
     login: {
         sms: {
             chinese_mainland: SMSConfig;
+            hmt: SMSConfig;
+            global: SMSConfig;
         };
     };
 };
