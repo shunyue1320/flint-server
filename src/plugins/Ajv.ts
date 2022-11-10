@@ -12,5 +12,6 @@ const phone: FormatDefinition<string> = {
 };
 
 export const ajvSelfPlugin = (ajv: Ajv): void => {
+    // https://ajv.js.org/guide/formats.html#user-defined-formats
     ajv.addFormat("phone", phone);
 };

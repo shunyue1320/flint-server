@@ -14,7 +14,7 @@ export const sendMessageSchema = {
     }),
 };
 
-/** 检测该电话号码是否已发送消息 */
+/** 查询 redis 检测该电话号码是否已发送消息, 没有或超过发送间隔返回 true */
 const canSend = async (phone: string): Promise<boolean> => {
     //
     const ttl = await RedisService.ttl(RedisKey.phoneLogin(phone));
@@ -30,11 +30,17 @@ export const sendMessage = async (
 ): Promise<Response> => {
     const { phone } = req.body;
     const sms = new SMS(phone);
-    // 去掉 +86 区域前缀，得到真实手机号
+    // 去掉 +86 区域前缀的+号，得到 "86手机号"
     const safePhone = SMSUtils.safePhone(phone);
-    console.log("1111111===", safePhone);
-    // if (await canSend(safePhone)) {
-    // }
+    if (await canSend(safePhone)) {
+        await sms.send();
+        // 发送完成后记录到 redis 缓存中
+        await RedisService.set(
+            RedisKey.phoneLogin(safePhone),
+            sms.verificationCode,
+            MessageExpirationSecond,
+        );
+    }
 
     return successJSON({});
 };

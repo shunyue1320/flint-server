@@ -5,6 +5,8 @@ import { Server } from "./constants/Config";
 import { orm } from "./thirdPartyService/TypeORMService";
 import { registerRoutersV1 } from "./utils/RegistryRouters";
 import { v1Routers } from "./v1/controllers/routes";
+import { Status } from "./constants/Project";
+import { ErrorCode } from "./ErrorCode";
 
 const app = fastify({
     caseSensitive: true,
@@ -13,6 +15,17 @@ const app = fastify({
         plugins: [ajvSelfPlugin],
     },
 }).withTypeProvider<TypeBoxTypeProvider>();
+
+app.setErrorHandler((err, request, reply) => {
+    if (err.validation) {
+        void reply.status(200).send({
+            status: Status.Failed,
+            code: ErrorCode.ParamsCheckFailed,
+        });
+
+        return;
+    }
+});
 
 app.get("/health-check", async (_req, reply) => {
     return reply.code(200).send("服务器已启动！");

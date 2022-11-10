@@ -99,7 +99,7 @@ export const registerRoutersV2 = registerRouters("v2");
 interface R<O> {
     <S>(
         path: string,
-        hander: (
+        handler: (
             req: FastifyRequestTypebox<S>,
             reply: FastifyReply,
         ) => Promise<O extends false ? void : Response>,
@@ -108,7 +108,7 @@ interface R<O> {
             schema: S;
             autoHandle?: O;
         },
-    );
+    ): void;
 }
 
 interface Router extends R<true>, R<false> {}
