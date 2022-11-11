@@ -12,6 +12,7 @@ module.exports = {
         "prettier",
     ],
     rules: {
+        "@typescript-eslint/ban-ts-comment": ["off"],
         "@typescript-eslint/no-explicit-any": ["off"],
         "@typescript-eslint/no-unsafe-member-access": ["off"],
         "@typescript-eslint/no-unsafe-assignment": ["off"],

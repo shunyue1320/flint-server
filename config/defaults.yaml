@@ -17,6 +17,10 @@ redis:
   db:
   queueDB:
 
+log:
+  pathname: "{{PROJECT_DIR}}/logs"
+  filename: "{{DAY_DATE}}"
+
 login:
   sms:
     enable: false

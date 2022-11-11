@@ -7,6 +7,7 @@ import { registerRoutersV1 } from "./utils/RegistryRouters";
 import { v1Routers } from "./v1/controllers/routes";
 import { Status } from "./constants/Project";
 import { ErrorCode } from "./ErrorCode";
+import { loggerServer, parseError } from "./logger";
 
 const app = fastify({
     caseSensitive: true,
@@ -23,6 +24,17 @@ app.setErrorHandler((err, request, reply) => {
             code: ErrorCode.ParamsCheckFailed,
         });
 
+        return;
+    }
+
+    // 记录级别为 error 的日志
+    loggerServer.error("请求意外中断", parseError(err));
+
+    if (!request.notAutoHandle) {
+        void reply.status(200).send({
+            status: Status.Failed,
+            code: ErrorCode.CurrentProcessFailed,
+        });
         return;
     }
 });
@@ -43,10 +55,10 @@ void orm().then(() => {
         },
         (err, address) => {
             if (err) {
-                console.log(`服务器启动失败`, err);
+                loggerServer.error("服务器启动失败", parseError(err));
                 process.exit(1);
             }
-            console.log(`服务器启动成功，${address}`);
+            loggerServer.info(`服务器启动成功，${address}`);
         },
     );
 });

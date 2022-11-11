@@ -40,6 +40,10 @@ type Config = {
         db: number;
         queueDB: number;
     };
+    log: {
+        pathname: string;
+        filename: string;
+    };
     login: {
         sms: {
             chinese_mainland: SMSConfig;

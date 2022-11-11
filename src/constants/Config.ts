@@ -48,3 +48,8 @@ export const PhoneSMS = {
         signName: config.login.sms.global.sign_name,
     },
 };
+
+export const LogConfig = {
+    pathname: config.log.pathname,
+    filename: config.log.filename,
+};
