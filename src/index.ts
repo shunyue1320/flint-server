@@ -54,6 +54,7 @@ void orm().then(async dataSource => {
         // 给请求 req 上挂载 req.queryRunner.manager
         await app.register(fastifyTypeORMQueryRunner, {
             dataSource: dataSource,
+            // transaction: 保证一组相关联的数据库操作的一致性，要么同时成功，要么同时失败
             transaction: true,
             // match: request => request.routerPath.startsWith('/v1'),
             respIsError: respStr => respStr === respErr,

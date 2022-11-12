@@ -1,12 +1,16 @@
+import { v4 } from "uuid";
 import { Type } from "@sinclair/typebox";
 import RedisService from "../../../../thirdPartyService/RedisService";
 import { FastifyRequestTypebox, Response } from "../../../../types/Server";
-import { SMS, SMSUtils } from "../../../../utils/SMS";
+import { SMSUtils } from "../../../../utils/SMS";
 import { RedisKey } from "../../../../utils/Redis";
 import { ErrorCode } from "../../../../error/ErrorCode";
 import { ControllerError } from "../../../../error/ControllerError";
 import { ExhaustiveAttackCount, ExhaustiveAttackExpirationSecond } from "./Constants";
 import { PhoneSMS, Server } from "../../../../constants/Config";
+import { UserPhoneService } from "../../../services/user/UserPhone";
+import { userPhoneDAO } from "../../../dao";
+import { LoginPhone } from "../platforms/LoginPhone";
 
 export const phoneSchema = {
     body: Type.Object(
@@ -73,7 +77,26 @@ export const phoneLogin = async (
     await assertCodeCorrect(safePhone, code);
     await clearTryLoginCount(safePhone);
 
-    // @todo: 用户注册登录逻辑
+    // 去数据库找该手机号是否注册过
+    const userUUIDByDB = await userPhoneDAO.findOne(req.DBTransaction, ["user_uuid"], {
+        phone_number: String(phone),
+    });
+    const userUUID = userUUIDByDB || v4();
+
+    const loginPhone = new LoginPhone({
+        DBTransaction: req.DBTransaction,
+        userUUID,
+    });
+
+    // 该手机号没有注册，则注册该用户
+    if (!userUUIDByDB) {
+        await loginPhone.register({
+            phone,
+            // 用户默认头像
+            avatarURL:
+                "https://flat-storage.oss-cn-hangzhou.aliyuncs.com/flat-resources/avatar/default-00.png",
+        });
+    }
 
     return;
 };

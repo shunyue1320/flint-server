@@ -3,6 +3,7 @@ import { EntityManager } from "typeorm/entity-manager/EntityManager";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
 import { Model } from "../../model";
+import { UserPhoneModel } from "../../model/user/Phone";
 import { UserModel } from "../../model/user/User";
 
 class DAO<M extends Model> {
@@ -159,3 +160,4 @@ class DAOUtils {
 }
 
 export const userDAO = new DAO(UserModel);
+export const userPhoneDAO = new DAO(UserPhoneModel);

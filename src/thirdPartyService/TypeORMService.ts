@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { MySQL, isDev, isTest } from "../constants/Config";
 import { UserModel } from "../model/user/User";
+import { UserPhoneModel } from "../model/user/Phone";
 
 export const dataSource = new DataSource({
     type: "mysql",
@@ -9,7 +10,7 @@ export const dataSource = new DataSource({
     username: MySQL.username,
     password: MySQL.password,
     database: MySQL.db,
-    entities: [UserModel],
+    entities: [UserModel, UserPhoneModel],
     extra: {
         connectionLimit: isTest ? 50 : 10,
     },
