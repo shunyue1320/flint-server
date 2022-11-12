@@ -44,7 +44,7 @@ const registerRouters =
                         const request = Object.assign(req, {
                             userUUID: req?.user?.userUUID,
                             loginSource: req?.user?.loginSource,
-                            // DBTransaction: req.queryRunner.manager,
+                            DBTransaction: req.queryRunner.manager,
                         });
 
                         try {

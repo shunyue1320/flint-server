@@ -8,6 +8,7 @@ import { v1Routers } from "./v1/controllers/routes";
 import { Status } from "./constants/Project";
 import { ErrorCode } from "./error/ErrorCode";
 import { loggerServer, parseError } from "./logger";
+import fastifyTypeORMQueryRunner from "@web-server-userland/fastify-typeorm-query-runner";
 
 const app = fastify({
     caseSensitive: true,
@@ -44,7 +45,21 @@ app.get("/health-check", async (_req, reply) => {
 });
 
 // orm: 连接好数据库后开启后端路由服务
-void orm().then(() => {
+void orm().then(async dataSource => {
+    {
+        const respErr = JSON.stringify({
+            Status: Status.Failed,
+            code: ErrorCode.CurrentProcessFailed,
+        });
+        // 给请求 req 上挂载 req.queryRunner.manager
+        await app.register(fastifyTypeORMQueryRunner, {
+            dataSource: dataSource,
+            transaction: true,
+            // match: request => request.routerPath.startsWith('/v1'),
+            respIsError: respStr => respStr === respErr,
+        });
+    }
+
     // 挂载 v1 路由接口
     registerRoutersV1(app, v1Routers);
 
