@@ -12,6 +12,7 @@ export class SMSUtils {
         return phone.startsWith("+852") || phone.startsWith("+853") || phone.startsWith("+886");
     }
 
+    /** 去掉 +86 区域前缀的+号，得到 "86手机号" */
     public static safePhone(phone: string): string {
         return phone.match(/\d+/g)!.join("");
     }

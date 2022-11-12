@@ -1,5 +1,5 @@
 import { Status } from "../../../../constants/Project";
-import { ErrorCode } from "../../../../ErrorCode";
+import { ErrorCode } from "../../../../error/ErrorCode";
 import { ResponseError, ResponseSuccess } from "../../../../types/Server";
 
 export const successJSON = <O>(data: O): ResponseSuccess<O> => {

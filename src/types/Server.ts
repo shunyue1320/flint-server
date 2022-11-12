@@ -10,7 +10,7 @@ import {
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { EntityManager } from "typeorm";
 import { Status, LoginPlatform } from "../constants/Project";
-import { ErrorCode } from "../ErrorCode";
+import { ErrorCode } from "../error/ErrorCode";
 
 export type ResponseError = {
     status: Status.Failed | Status.AuthFailed;

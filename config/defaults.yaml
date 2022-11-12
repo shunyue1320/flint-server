@@ -25,6 +25,10 @@ login:
   sms:
     enable: false
     force: false
+    test_users:
+      - phone:
+        code:
+    # 大陆短信
     chinese_mainland:
       access_id:
       access_secret:
@@ -36,6 +40,7 @@ login:
       access_secret:
       template_code:
       sign_name:
+    # 全球短信
     global:
       access_id:
       access_secret:

@@ -23,8 +23,27 @@ class RedisService {
         return await this.client.set(key, value, "EX", expire);
     }
 
+    public async get(key: string): Promise<string | null> {
+        return await this.client.get(key);
+    }
+
+    public async del(key: string | string[]): Promise<void> {
+        await this.client.del(typeof key === "string" ? [key] : key);
+    }
+
+    /**  Incr 命令将 key 中储存的数字值增一，如果 key 不存在，那么 key 的值会先被初始化为 0  */
+    public async incr(key: string): Promise<number> {
+        return await this.client.incr(key);
+    }
+
+    /** 以秒为单位返回 key 的剩余过期时间 */
     public async ttl(key: string): Promise<number> {
         return await this.client.ttl(key);
+    }
+
+    /** 命令用于设置 key 的过期时间，key 过期后将不再可用。单位以秒计 */
+    public async expire(key: string, seconds: number): Promise<void> {
+        await this.client.expire(key, seconds);
     }
 }
 

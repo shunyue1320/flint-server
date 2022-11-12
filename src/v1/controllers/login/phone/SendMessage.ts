@@ -7,11 +7,16 @@ import RedisService from "../../../../thirdPartyService/RedisService";
 import { MessageExpirationSecond, MessageIntervalSecond } from "./Constants";
 
 export const sendMessageSchema = {
-    body: Type.Object({
-        phone: Type.String({
-            format: "phone",
-        }),
-    }),
+    body: Type.Object(
+        {
+            phone: Type.String({
+                format: "phone",
+            }),
+        },
+        {
+            additionalProperties: false,
+        },
+    ),
 };
 
 /** 查询 redis 检测该电话号码是否已发送消息, 没有或超过发送间隔返回 true */
@@ -27,10 +32,10 @@ const canSend = async (phone: string): Promise<boolean> => {
 
 export const sendMessage = async (
     req: FastifyRequestTypebox<typeof sendMessageSchema>,
-): Promise<Response> => {
+): Promise<Response<ResponseType>> => {
     const { phone } = req.body;
     const sms = new SMS(phone);
-    // 去掉 +86 区域前缀的+号，得到 "86手机号"
+
     const safePhone = SMSUtils.safePhone(phone);
     if (await canSend(safePhone)) {
         await sms.send();
@@ -44,3 +49,5 @@ export const sendMessage = async (
 
     return successJSON({});
 };
+
+interface ResponseType {}

@@ -1,7 +1,7 @@
 import { FastifyReply } from "fastify";
 import { Status } from "../constants/Project";
 import { FastifyInstance, FastifyRequestTypebox, Response } from "../types/Server";
-import { ErrorCode } from "../ErrorCode";
+import { ErrorCode } from "../error/ErrorCode";
 import { FError } from "../error/ControllerError";
 
 const registerRouters =

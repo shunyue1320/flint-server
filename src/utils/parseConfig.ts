@@ -46,6 +46,10 @@ type Config = {
     };
     login: {
         sms: {
+            test_users: Array<{
+                phone: string;
+                code: number;
+            }>;
             chinese_mainland: SMSConfig;
             hmt: SMSConfig;
             global: SMSConfig;

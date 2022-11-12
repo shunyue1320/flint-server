@@ -6,7 +6,7 @@ import { orm } from "./thirdPartyService/TypeORMService";
 import { registerRoutersV1 } from "./utils/RegistryRouters";
 import { v1Routers } from "./v1/controllers/routes";
 import { Status } from "./constants/Project";
-import { ErrorCode } from "./ErrorCode";
+import { ErrorCode } from "./error/ErrorCode";
 import { loggerServer, parseError } from "./logger";
 
 const app = fastify({
