@@ -4,6 +4,7 @@ import { sendMessage, sendMessageSchema } from "./phone/SendMessage";
 import { phoneLogin, phoneLoginSchema } from "./phone/Phone";
 import { setAuthUUID, setAuthUUIDSchema } from "./SetAuthUUID";
 import { wechatWebCallback, wechatWebCallbackSchema } from "./weChat/web/Callback";
+import { loginProcess, loginProcessSchema } from "./Process";
 
 export const loginRouters = (server: Server): void => {
     server.post("login/phone/sendMessage", sendMessage, {
@@ -26,5 +27,10 @@ export const loginRouters = (server: Server): void => {
         schema: wechatWebCallbackSchema,
         auth: false,
         enable: WeChat.web.enable,
+    });
+    // 扫码成功后获取登录信息
+    server.post("login/process", loginProcess, {
+        schema: loginProcessSchema,
+        auth: false,
     });
 };
