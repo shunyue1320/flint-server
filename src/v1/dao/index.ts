@@ -5,7 +5,7 @@ import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity
 import { Model } from "../../model";
 import { UserPhoneModel } from "../../model/user/Phone";
 import { UserModel } from "../../model/user/User";
-
+import { UserWeChatModel } from "../../model/user/WeChat";
 class DAO<M extends Model> {
     public constructor(private readonly model: EntityTarget<M>) {}
 
@@ -161,3 +161,4 @@ class DAOUtils {
 
 export const userDAO = new DAO(UserModel);
 export const userPhoneDAO = new DAO(UserPhoneModel);
+export const userWeChatDAO = new DAO(UserWeChatModel);

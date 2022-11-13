@@ -1,4 +1,5 @@
 import { EntityManager } from "typeorm";
+import { PhoneSMS } from "../../../constants/Config";
 import { userPhoneDAO } from "../../dao";
 
 export class UserPhoneService {
@@ -12,6 +13,26 @@ export class UserPhoneService {
             user_name: userName,
             phone_number: phone,
         });
+    }
+
+    public async exist(): Promise<boolean> {
+        return await UserPhoneService.exist(this.DBTransaction, this.userUUID);
+    }
+    /** 判断该 userUUID 是否绑定了手机 */
+    public static async exist(DBTransaction: EntityManager, userUUID: string): Promise<boolean> {
+        if (!UserPhoneService.enable) {
+            return false;
+        }
+
+        const result = await userPhoneDAO.findOne(DBTransaction, "id", {
+            user_uuid: userUUID,
+        });
+
+        return !!result;
+    }
+
+    private static get enable(): boolean {
+        return PhoneSMS.enable;
     }
 
     // public async userUUIDByPhone(phone: string): Promise<string | null> {

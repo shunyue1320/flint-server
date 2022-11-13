@@ -1,4 +1,4 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply } from "fastify";
 import { Status } from "../constants/Project";
 import { FastifyInstance, FastifyRequestTypebox, Response } from "../types/Server";
 import { ErrorCode } from "../error/ErrorCode";
@@ -109,6 +109,7 @@ interface R<O> {
             auth?: boolean;
             schema: S;
             autoHandle?: O;
+            enable?: boolean;
         },
     ): void;
 }

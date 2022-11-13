@@ -1,8 +1,9 @@
 import { Server } from "../../../utils/RegistryRouters";
-import { PhoneSMS } from "../../../constants/Config";
+import { PhoneSMS, WeChat } from "../../../constants/Config";
 import { sendMessage, sendMessageSchema } from "./phone/SendMessage";
 import { phoneLogin, phoneLoginSchema } from "./phone/Phone";
 import { setAuthUUID, setAuthUUIDSchema } from "./SetAuthUUID";
+import { wechatWebCallback, wechatWebCallbackSchema } from "./weChat/web/Callback";
 
 export const loginRouters = (server: Server): void => {
     server.post("login/phone/sendMessage", sendMessage, {
@@ -19,5 +20,11 @@ export const loginRouters = (server: Server): void => {
     server.post("login/set-auth-uuid", setAuthUUID, {
         schema: setAuthUUIDSchema,
         auth: false,
+    });
+    // 微信扫码回调
+    server.post("login/weChat/web/callback", wechatWebCallback, {
+        schema: wechatWebCallbackSchema,
+        auth: false,
+        enable: WeChat.web.enable,
     });
 };

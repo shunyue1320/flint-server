@@ -33,6 +33,14 @@ export const JWT = {
     algorithms: config.jwt.algorithms,
 };
 
+export const WeChat = {
+    web: {
+        enable: config.login.wechat.web.enable,
+        appId: config.login.wechat.web.app_id,
+        appSecret: config.login.wechat.web.app_secret,
+    },
+};
+
 export const PhoneSMS = {
     enable: config.login.sms.enable,
     testUsers: config.login.sms.test_users.map(user => {

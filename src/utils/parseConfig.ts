@@ -49,6 +49,13 @@ type Config = {
         filename: string;
     };
     login: {
+        wechat: {
+            web: {
+                enable: boolean;
+                app_id: string;
+                app_secret: string;
+            };
+        };
         sms: {
             enable: boolean;
             test_users: Array<{

@@ -21,7 +21,6 @@ export const sendMessageSchema = {
 
 /** 查询 redis 检测该电话号码是否已发送消息, 没有或超过发送间隔返回 true */
 const canSend = async (safePhone: string): Promise<boolean> => {
-    //
     const ttl = await RedisService.ttl(RedisKey.phoneLogin(safePhone));
     if (ttl < 0) {
         return true;
