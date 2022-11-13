@@ -1,5 +1,5 @@
 import path from "path";
-import filenamify, { filenamifyPath } from "filenamify";
+import filenamify from "filenamify";
 import { appendFileSync, ensureDirSync, existsSync } from "fs-extra";
 import { LoggerContext, LoggerFormat } from "../Logger";
 import { LoggerAbstractPlugin } from "./LoggerAbstractPlugin";
@@ -13,7 +13,7 @@ export class LoggerPluginFile<C extends LoggerContext> extends LoggerAbstractPlu
         appendFileSync(this.logFilePath, `${JSON.stringify(log)}\n`);
     }
     public get logFilePath(): string {
-        const pathname = filenamifyPath(envVariable.parse(this.pathname), {
+        const pathname = filenamify.path(envVariable.parse(this.pathname), {
             replacement: "-",
         });
 

@@ -10,12 +10,16 @@ mysql:
   db: flat_server
 
 redis:
-  host:
-  port:
+  host: 127.0.0.1
+  port: 7528
   username:
-  password:
-  db:
-  queueDB:
+  password: flat-server-test
+  db: 0
+  queueDB: flat_server_queue
+
+jwt:
+  secret: test
+  algorithms: HS256
 
 log:
   pathname: "{{PROJECT_DIR}}/logs"

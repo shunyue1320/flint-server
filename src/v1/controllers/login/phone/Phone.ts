@@ -8,11 +8,12 @@ import { ErrorCode } from "../../../../error/ErrorCode";
 import { ControllerError } from "../../../../error/ControllerError";
 import { ExhaustiveAttackCount, ExhaustiveAttackExpirationSecond } from "./Constants";
 import { PhoneSMS, Server } from "../../../../constants/Config";
-import { UserPhoneService } from "../../../services/user/UserPhone";
 import { userPhoneDAO } from "../../../dao";
 import { LoginPhone } from "../platforms/LoginPhone";
+import { LoginPlatform, Status } from "../../../../constants/Project";
+import { FastifyReply } from "fastify";
 
-export const phoneSchema = {
+export const phoneLoginSchema = {
     body: Type.Object(
         {
             phone: Type.String({
@@ -67,8 +68,14 @@ const clearTryLoginCount = async (safePhone: string): Promise<void> => {
     await RedisService.del(RedisKey.phoneTryLoginCount(safePhone));
 };
 
+/** 清除redis验证码 */
+const clearVerificationCode = async (safePhone: string): Promise<void> => {
+    await RedisService.del(RedisKey.phoneLogin(safePhone));
+};
+
 export const phoneLogin = async (
-    req: FastifyRequestTypebox<typeof phoneSchema>,
+    req: FastifyRequestTypebox<typeof phoneLoginSchema>,
+    reply: FastifyReply,
 ): Promise<Response<ResponseType>> => {
     const { phone, code } = req.body;
     const safePhone = SMSUtils.safePhone(phone);
@@ -78,7 +85,7 @@ export const phoneLogin = async (
     await clearTryLoginCount(safePhone);
 
     // 去数据库找该手机号是否注册过
-    const userUUIDByDB = await userPhoneDAO.findOne(req.DBTransaction, ["user_uuid"], {
+    const { user_uuid: userUUIDByDB } = await userPhoneDAO.findOne(req.DBTransaction, "user_uuid", {
         phone_number: String(phone),
     });
     const userUUID = userUUIDByDB || v4();
@@ -98,7 +105,25 @@ export const phoneLogin = async (
         });
     }
 
-    return;
+    const { userName, avatarURL } = await loginPhone.svc.user.nameAndAvatar();
+
+    const result = {
+        status: Status.Success,
+        data: {
+            name: userName,
+            avatar: avatarURL,
+            userUUID,
+            token: await reply.jwtSign({
+                userUUID,
+                loginSource: LoginPlatform.Phone,
+            }),
+            hasPhone: true,
+        },
+    } as const;
+
+    await clearVerificationCode(safePhone);
+
+    return result;
 };
 
 interface ResponseType {
@@ -106,5 +131,5 @@ interface ResponseType {
     avatar: string;
     userUUID: string;
     token: string;
-    hasPhone: true;
+    hasPhone: boolean;
 }

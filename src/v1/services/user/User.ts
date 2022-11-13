@@ -1,4 +1,4 @@
-import { EntityManager, InsertResult } from "typeorm";
+import { EntityManager } from "typeorm";
 import { Gender } from "../../../constants/Project";
 import { userDAO } from "../../dao";
 
@@ -18,5 +18,23 @@ export class UserService {
             gender,
             user_password: "",
         });
+    }
+
+    public async nameAndAvatar(): Promise<{
+        userName: string;
+        avatarURL: string;
+    } | null> {
+        const result = await userDAO.findOne(this.DBTransaction, ["user_name", "avatar_url"], {
+            user_uuid: this.userUUID,
+        });
+
+        if (result) {
+            return {
+                userName: result.user_name,
+                avatarURL: result.avatar_url,
+            };
+        }
+
+        return null;
     }
 }

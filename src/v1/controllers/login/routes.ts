@@ -1,6 +1,7 @@
 import { Server } from "../../../utils/RegistryRouters";
-import { sendMessage, sendMessageSchema } from "./phone/SendMessage";
 import { PhoneSMS } from "../../../constants/Config";
+import { sendMessage, sendMessageSchema } from "./phone/SendMessage";
+import { phoneLogin, phoneLoginSchema } from "./phone/Phone";
 
 export const loginRouters = (server: Server): void => {
     server.post("login/phone/sendMessage", sendMessage, {
@@ -8,8 +9,8 @@ export const loginRouters = (server: Server): void => {
         auth: false,
         enable: PhoneSMS.enable,
     });
-    server.post("login/phone/phone", sendMessage, {
-        schema: sendMessageSchema,
+    server.post("login/phone", phoneLogin, {
+        schema: phoneLoginSchema,
         auth: false,
         enable: PhoneSMS.enable,
     });

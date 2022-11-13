@@ -1,4 +1,4 @@
-import { FastifyReply } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import { Status } from "../constants/Project";
 import { FastifyInstance, FastifyRequestTypebox, Response } from "../types/Server";
 import { ErrorCode } from "../error/ErrorCode";
@@ -31,7 +31,7 @@ const registerRouters =
                     `/${version}/${path}`,
                     {
                         // 在校验之前，是否需要登录权限校验
-                        // preValidation: auth ? [(fastifyServer as any).authen] : undefined,
+                        preValidation: auth ? [(fastifyServer as any).authenticate] : undefined,
                         schema: config.schema,
                     },
                     async (req, reply: FastifyReply) => {
@@ -42,7 +42,9 @@ const registerRouters =
                         let resp: Response | null = null;
 
                         const request = Object.assign(req, {
+                            // @ts-ignore
                             userUUID: req?.user?.userUUID,
+                            // @ts-ignore
                             loginSource: req?.user?.loginSource,
                             DBTransaction: req.queryRunner.manager,
                         });

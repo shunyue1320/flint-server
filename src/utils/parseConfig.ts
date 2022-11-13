@@ -40,12 +40,17 @@ type Config = {
         db: number;
         queueDB: number;
     };
+    jwt: {
+        secret: string;
+        algorithms: string;
+    };
     log: {
         pathname: string;
         filename: string;
     };
     login: {
         sms: {
+            enable: boolean;
             test_users: Array<{
                 phone: string;
                 code: number;

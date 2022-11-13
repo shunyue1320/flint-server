@@ -13,6 +13,12 @@ module.exports = {
     ],
     rules: {
         "@typescript-eslint/ban-ts-comment": ["off"],
+        "@typescript-eslint/no-unused-vars": [
+            "error",
+            {
+                argsIgnorePattern: "^_",
+            },
+        ],
         "@typescript-eslint/no-explicit-any": ["off"],
         "@typescript-eslint/no-empty-interface": ["off"],
         "@typescript-eslint/no-unsafe-member-access": ["off"],

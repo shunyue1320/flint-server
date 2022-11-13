@@ -1,5 +1,5 @@
 import packages from "../../package.json";
-import { config } from "../utils/ParseConfig";
+import { config } from "../utils/parseConfig";
 
 export const isDev = process.env.NODE_ENV === "development";
 export const isTest = process.env.IS_TEST === "yes";
@@ -28,7 +28,13 @@ export const Redis = {
     queueDB: config.redis.queueDB,
 };
 
+export const JWT = {
+    secret: config.jwt.secret,
+    algorithms: config.jwt.algorithms,
+};
+
 export const PhoneSMS = {
+    enable: config.login.sms.enable,
     testUsers: config.login.sms.test_users.map(user => {
         return {
             phone: String(user.phone),
