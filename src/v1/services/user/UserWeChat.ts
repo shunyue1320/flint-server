@@ -19,11 +19,17 @@ export class UserWeChatService {
         });
     }
 
-    // public static async userUUIDByUnionUUID(unionUUID: string): Promise<string | null> {
-    //     const { user_uuid } = await userWeChatDAO.findOne(this.DBTransaction, "user_uuid", {
-    //         union_uuid: unionUUID,
-    //     });
-
-    //     return user_uuid ? user_uuid : null;
-    // }
+    public async userUUIDByUnionUUID(unionUUID: string) {
+        return await UserWeChatService.userUUIDByUnionUUID(this.DBTransaction, unionUUID);
+    }
+    /** 查询该微信平台登录用户是否已注册 */
+    public static async userUUIDByUnionUUID(
+        DBTransaction: EntityManager,
+        unionUUID: string,
+    ): Promise<string | null> {
+        const result = await userWeChatDAO.findOne(DBTransaction, "user_uuid", {
+            union_uuid: unionUUID,
+        });
+        return result ? result.user_uuid : null;
+    }
 }

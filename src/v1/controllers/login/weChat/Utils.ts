@@ -1,9 +1,9 @@
+import { v4 } from "uuid";
 import { FastifyReply } from "fastify";
 import { EntityManager } from "typeorm";
-import { v4 } from "uuid";
-import { userWeChatDAO } from "../../../dao";
 import { LoginWechat } from "../platforms/LoginWechat";
 import { LoginPlatform } from "../../../../constants/Project";
+import { UserWeChatService } from "../../../services/user/UserWeChat";
 
 export const wechatCallback = async (
     DBTransaction: EntityManager,
@@ -13,11 +13,13 @@ export const wechatCallback = async (
     reply: FastifyReply,
 ): Promise<WeChatResponse> => {
     await LoginWechat.assertHasAuthUUID(authUUID);
+
     const userInfo = await LoginWechat.getUserInfoAndToken(code, type);
-    // 查询该微信平台登录用户是否已注册
-    const { user_uuid: userUUIDByDB } = await userWeChatDAO.findOne(DBTransaction, "user_uuid", {
-        union_uuid: userInfo.unionUUID,
-    });
+
+    const userUUIDByDB = await UserWeChatService.userUUIDByUnionUUID(
+        DBTransaction,
+        userInfo.unionUUID,
+    );
 
     const userUUID = userUUIDByDB || v4();
 

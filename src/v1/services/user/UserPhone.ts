@@ -35,10 +35,17 @@ export class UserPhoneService {
         return PhoneSMS.enable;
     }
 
-    // public async userUUIDByPhone(phone: string): Promise<string | null> {
-    //     const result = await userPhoneDAO.findOne(this.DBTransaction, ["user_uuid"], {
-    //         phone_number: String(phone),
-    //     });
-    //     return result ? result.user_uuid : null;
-    // }
+    public async userUUIDByPhone(phone: string): Promise<string | null> {
+        return await UserPhoneService.userUUIDByPhone(this.DBTransaction, phone);
+    }
+    /** 去数据库找该手机号是否注册过 */
+    public static async userUUIDByPhone(
+        DBTransaction: EntityManager,
+        phone: string,
+    ): Promise<string | null> {
+        const result = await userPhoneDAO.findOne(DBTransaction, ["user_uuid"], {
+            phone_number: String(phone),
+        });
+        return result ? result.user_uuid : null;
+    }
 }

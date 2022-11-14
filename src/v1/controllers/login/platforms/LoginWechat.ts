@@ -1,10 +1,10 @@
+import { AxiosResponse } from "axios";
 import { ax } from "../../../utils/Axios";
 import { AbstractLogin } from "../../../../abstract/login";
 import { LoginClassParams } from "../../../../abstract/login/Type";
 import { WeChat } from "../../../../constants/Config";
 import { UserService } from "../../../services/user/User";
 import { UserWeChatService } from "../../../services/user/UserWeChat";
-import axios, { AxiosResponse } from "axios";
 
 export class LoginWechat extends AbstractLogin {
     public readonly svc: RegisterService;
@@ -66,7 +66,7 @@ export class LoginWechat extends AbstractLogin {
     }
 
     public static async wechatRequest<T>(url: string): Promise<T> {
-        const response: AxiosResponse<T | WeChatRequestFailed> = await axios.get(url);
+        const response: AxiosResponse<T | WeChatRequestFailed> = await ax.get(url);
         if ("errmsg" in response.data) {
             throw new Error(response.data.errmsg);
         }

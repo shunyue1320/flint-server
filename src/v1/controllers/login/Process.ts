@@ -24,6 +24,7 @@ export const loginProcess = async (
     const { authUUID } = req.body;
 
     await AbstractLogin.assertHasAuthUUID(authUUID);
+
     const userInfoStr = await RedisService.get(RedisKey.authUserInfo(authUUID));
 
     if (userInfoStr === null) {

@@ -8,10 +8,10 @@ import { ErrorCode } from "../../../../error/ErrorCode";
 import { ControllerError } from "../../../../error/ControllerError";
 import { ExhaustiveAttackCount, ExhaustiveAttackExpirationSecond } from "./Constants";
 import { PhoneSMS, Server } from "../../../../constants/Config";
-import { userPhoneDAO } from "../../../dao";
 import { LoginPhone } from "../platforms/LoginPhone";
 import { LoginPlatform, Status } from "../../../../constants/Project";
 import { FastifyReply } from "fastify";
+import { UserPhoneService } from "../../../services/user/UserPhone";
 
 export const phoneLoginSchema = {
     body: Type.Object(
@@ -84,10 +84,8 @@ export const phoneLogin = async (
     await assertCodeCorrect(safePhone, code);
     await clearTryLoginCount(safePhone);
 
-    // 去数据库找该手机号是否注册过
-    const { user_uuid: userUUIDByDB } = await userPhoneDAO.findOne(req.DBTransaction, "user_uuid", {
-        phone_number: String(phone),
-    });
+    const userUUIDByDB = await UserPhoneService.userUUIDByPhone(req.DBTransaction, phone);
+
     const userUUID = userUUIDByDB || v4();
 
     const loginPhone = new LoginPhone({

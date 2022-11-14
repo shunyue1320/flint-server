@@ -32,7 +32,7 @@ export abstract class AbstractLogin {
         );
     }
 
-    /** 检查是否存在该 authUUID */
+    /** 检查是否存在该 authUUID，不存在响应错误 */
     public static async assertHasAuthUUID(authUUID: string): Promise<void> {
         const result = await RedisService.get(RedisKey.authUUID(authUUID));
         if (result === null) {
