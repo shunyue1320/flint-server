@@ -23,7 +23,7 @@ export const loginRouters = (server: Server): void => {
         auth: false,
     });
     // 微信扫码回调
-    server.post("login/weChat/web/callback", wechatWebCallback, {
+    server.get("login/weChat/web/callback", wechatWebCallback, {
         schema: wechatWebCallbackSchema,
         auth: false,
         enable: WeChat.web.enable,

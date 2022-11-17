@@ -1,0 +1,14 @@
+dist
+node_modules
+scripts
+.vscode
+.idea
+dist-test
+test
+helm
+docs
+.github
+.gitlab-ci.yml
+README-zh.md
+README.md
+
