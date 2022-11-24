@@ -1,5 +1,7 @@
 import { EntityManager } from "typeorm";
 import { Gender } from "../../../constants/Project";
+import { FError } from "../../../error/ControllerError";
+import { ErrorCode } from "../../../error/ErrorCode";
 import { userDAO } from "../../dao";
 
 export class UserService {
@@ -36,5 +38,19 @@ export class UserService {
         }
 
         return null;
+    }
+
+    /** 断言是否存在该用户 */
+    public async assertGetNameAndAvatar(): Promise<{
+        userName: string;
+        avatarURL: string;
+    }> {
+        const result = await this.nameAndAvatar();
+
+        if (result === null) {
+            throw new FError(ErrorCode.UserNotFound);
+        }
+
+        return result;
     }
 }

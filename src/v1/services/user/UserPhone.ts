@@ -1,5 +1,7 @@
 import { EntityManager } from "typeorm";
 import { PhoneSMS } from "../../../constants/Config";
+import { FError } from "../../../error/ControllerError";
+import { ErrorCode } from "../../../error/ErrorCode";
 import { userPhoneDAO } from "../../dao";
 
 export class UserPhoneService {
@@ -29,6 +31,13 @@ export class UserPhoneService {
         });
 
         return !!result;
+    }
+
+    public async assertExist(): Promise<void> {
+        const result = await this.exist();
+        if (!result) {
+            throw new FError(ErrorCode.UserNotFound);
+        }
     }
 
     private static get enable(): boolean {
