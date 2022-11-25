@@ -6,6 +6,7 @@
     "scripts": {
         "start": "cross-env NODE_ENV=development webpack --watch --progress --config webpack/webpack.dev.js",
         "build": "cross-env NODE_ENV=production webpack --progress --config webpack/webpack.prod.js",
+        "test:sync:orm": "cross-env IS_TEST=yes ts-node scripts/sync-orm.ts",
         "prepare": "husky install",
         "lint": "lint-staged"
     },

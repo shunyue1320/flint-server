@@ -2,8 +2,12 @@ import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
 
-const env = process.env.NODE_ENV;
-const configDirPath = path.join(__dirname, "..", "config");
+const configDirPath =
+    process.env.IS_TEST === "yes"
+        ? path.join(__dirname, "..", "..", "config")
+        : path.join(__dirname, "..", "config");
+
+const env = process.env.IS_TEST === "yes" ? "test" : process.env.NODE_ENV;
 
 const configPath = (() => {
     const flinenames = [`${env}.local.yaml`, `${env}.yaml`];
