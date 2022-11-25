@@ -45,6 +45,14 @@ class RedisService {
     public async expire(key: string, seconds: number): Promise<void> {
         await this.client.expire(key, seconds);
     }
+
+    /** 批量 */
+    public async mget(keys: string[]): Promise<(string | null)[]> {
+        if (keys.length === 0) {
+            return [];
+        }
+        return await this.client.mget(keys);
+    }
 }
 
 export default new RedisService();

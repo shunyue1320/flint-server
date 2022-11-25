@@ -5,7 +5,7 @@ import { phoneLogin, phoneLoginSchema } from "./phone/Phone";
 import { setAuthUUID, setAuthUUIDSchema } from "./SetAuthUUID";
 import { wechatWebCallback, wechatWebCallbackSchema } from "./weChat/web/Callback";
 import { loginProcess, loginProcessSchema } from "./Process";
-import { login, LoginSchema } from "./Login";
+import { login, loginSchema } from "./Login";
 
 export const loginRouters = (server: Server): void => {
     server.post("login/phone/sendMessage", sendMessage, {
@@ -36,7 +36,7 @@ export const loginRouters = (server: Server): void => {
     });
     // 进入首页获取登录信息
     server.post("login", login, {
-        schema: LoginSchema,
+        schema: loginSchema,
         auth: true,
     });
 };
