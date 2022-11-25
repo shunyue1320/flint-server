@@ -27,7 +27,7 @@ export class RoomUserModel extends Content {
         length: 6,
         comment: "前端需要此字段来设置rtc",
     })
-    rtc_uid;
+    rtc_uid: string;
 
     @Index("room_users_is_delete_index")
     @Column({
