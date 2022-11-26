@@ -46,12 +46,27 @@ class RedisService {
         await this.client.expire(key, seconds);
     }
 
-    /** 批量 */
+    /** 返回所有(一个或多个)给定key的值。 key不存在则返回null */
     public async mget(keys: string[]): Promise<(string | null)[]> {
         if (keys.length === 0) {
             return [];
         }
         return await this.client.mget(keys);
+    }
+
+    /** redis 查找所有的 keys， 返回第一个不存在的 key */
+    public async vacantKey(keys: string[]): Promise<string | null> {
+        const valueResult = await this.mget(keys);
+
+        for (let i = 0; i < valueResult.length; i++) {
+            const value = valueResult[i];
+            // 返回第一个不存在的 key
+            if (value === null) {
+                return keys[i];
+            }
+        }
+
+        return null;
     }
 }
 

@@ -73,3 +73,21 @@ export const LogConfig = {
     pathname: config.log.pathname,
     filename: config.log.filename,
 };
+
+export const Censorship = {
+    text: {
+        enable: config.censorship.text.enable,
+        type: config.censorship.text.type,
+        aliCloud: {
+            accessID: config.censorship.text.aliCloud.access_id,
+            accessSecret: config.censorship.text.aliCloud.access_secret,
+            endpoint: config.censorship.text.aliCloud.endpoint,
+        },
+    },
+};
+
+export const Whiteboard = {
+    accessKey: config.whiteboard.access_key,
+    secretAccessKey: config.whiteboard.secret_access_key,
+    convertRegion: config.whiteboard.convert_region,
+};

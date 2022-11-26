@@ -71,6 +71,22 @@ type Config = {
             global: SMSConfig;
         };
     };
+    censorship: {
+        text: {
+            enable: boolean;
+            type: string;
+            aliCloud: {
+                access_id: string;
+                access_secret: string;
+                endpoint: string;
+            };
+        };
+    };
+    whiteboard: {
+        access_key: string;
+        secret_access_key: string;
+        convert_region: "cn-hz" | "us-sv" | "sg" | "in-mum" | "gb-lon";
+    };
 };
 
 interface SMSConfig {

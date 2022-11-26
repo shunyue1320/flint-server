@@ -86,14 +86,14 @@ const queryRoomsByType = async (
 
     switch (type) {
         case ListType.All: {
-            // 查询状态不等于 "Stopped" 的所有房间
+            // 查询状态不是 停止 的所有房间
             queryBuilder = queryBuilder.andWhere("r.room_status <> :notRoomStatus", {
                 notRoomStatus: RoomStatus.Stopped,
             });
             break;
         }
         case ListType.Today: {
-            // 查询状态不等于 "Stopped" 的所有房间
+            // 查询状态不是 停止 的所有房间
             queryBuilder = queryBuilder
                 .andWhere("r.begin_time = CURDATE()")
                 .andWhere("r.room_status <> :notRoomStatus", {
@@ -102,7 +102,7 @@ const queryRoomsByType = async (
             break;
         }
         case ListType.Periodic: {
-            // 查询状态不等于 "Stopped" 的所有房间
+            // 查询状态是 停止 的所有房间
             queryBuilder = queryBuilder
                 .andWhere("r.room_status <> :notRoomStatus", {
                     notRoomStatus: RoomStatus.Stopped,
@@ -112,6 +112,7 @@ const queryRoomsByType = async (
         }
         case ListType.History: {
             queryBuilder = queryBuilder
+                // 创建子查找过滤数据，将当前数据中 room_uuid 存在 RoomRecordModel 表里的数据过滤出来
                 .leftJoin(
                     qb => {
                         // 房间记录表里面找
@@ -126,6 +127,7 @@ const queryRoomsByType = async (
                     "rr",
                     "rr.room_uuid = r.room_uuid AND rr.is_delete = false",
                 )
+                // 将 room_uuid 的值给 hasRecord，后续给 hasRecord 做一个 to boolean
                 .addSelect("rr.room_uuid", "hasRecord")
                 .andWhere("r.room_status = :roomStatus", {
                     roomStatus: RoomStatus.Stopped,
