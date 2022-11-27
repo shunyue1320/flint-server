@@ -23,14 +23,16 @@ export const createOrdinarySchema = {
         type: Type.String({
             enum: [RoomType.OneToOne, RoomType.SmallClass, RoomType.BigClass],
         }),
-        beginTime: Type.Integer({
-            format: "unix-timestamp",
-            nullable: true,
-        }),
-        endTime: Type.Integer({
-            format: "unix-timestamp",
-            nullable: true,
-        }),
+        beginTime: Type.Optional(
+            Type.Integer({
+                format: "unix-timestamp",
+            }),
+        ),
+        endTime: Type.Optional(
+            Type.Integer({
+                format: "unix-timestamp",
+            }),
+        ),
         region: Type.String({
             enum: [Region.CN_HZ, Region.US_SV, Region.SG, Region.IN_MUM, Region.GB_LON],
         }),
