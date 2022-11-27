@@ -5,7 +5,7 @@ export const timeExceedRedundancyOneMinute = (time: number): boolean => {
     // 当前时间剪去1分钟
     const redundancyTime = subMinutes(1)(Date.now());
     // 预约的时间小于 redundancyTime 返回 -1
-    return compareDesc(redundancyTime)(time) === -1;
+    return compareDesc(time)(redundancyTime) === -1;
 };
 
 // 开始时间 > 结束时间 返回 true
