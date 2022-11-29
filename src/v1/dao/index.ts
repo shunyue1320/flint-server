@@ -98,7 +98,7 @@ class DAO<M extends Model> {
             .orIgnore(config?.orIgnore); // 如果不存在就插入，存在就忽略
 
         if (config?.orUpdate) {
-            sql = sql.orUpdate(config.orUpdate);
+            sql = sql.orUpdate(config.orUpdate); // 如果存在就只更新 orUpdate 里面的内容
         }
 
         await sql.execute();
