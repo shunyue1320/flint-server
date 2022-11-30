@@ -1,11 +1,12 @@
 import cryptoRandomString from "crypto-random-string";
 import { EntityManager } from "typeorm";
+import { AGORA_SHARE_SCREEN_UID } from "../../../../constants/Agora";
 import { Status } from "../../../../constants/Project";
 import { ErrorCode } from "../../../../error/ErrorCode";
 import { RoomStatus } from "../../../../model/room/Constants";
 import { createWhiteboardRoomToken } from "../../../../utils/NetlessToken";
 import { RoomDAO, RoomUserDAO } from "../../../dao";
-import { getRTCToken } from "../../../utils/AgoraToken";
+import { getRTCToken, getRTMToken } from "../../../utils/AgoraToken";
 
 export const joinOrdinary = async (
     DBTransaction: EntityManager,

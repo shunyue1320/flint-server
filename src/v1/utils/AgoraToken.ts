@@ -1,4 +1,4 @@
-import { RtcRole, RtcTokenBuilder } from "agora-access-token";
+import { RtcRole, RtcTokenBuilder, RtmRole, RtmTokenBuilder } from "agora-access-token";
 import { Agora } from "../../constants/Config";
 import RedisService from "../../thirdPartyService/RedisService";
 import { RedisKey } from "../../utils/Redis";
@@ -15,6 +15,10 @@ const generateRTCToken = (title: string, uid: number): string => {
     );
 };
 
+const generateRTMToken = (uid: string) => {
+    return RtmTokenBuilder.buildToken(Agora.appId, Agora.appCertificate, uid, RtmRole.Rtm_User, 0);
+};
+
 export const getRTCToken = async (roomUUID: string, rtcUID: number): Promise<string> => {
     // 查询是否存在 token
     const rtcKey = RedisKey.agoraRTCRoomUserToken(roomUUID, rtcUID);
@@ -26,4 +30,18 @@ export const getRTCToken = async (roomUUID: string, rtcUID: number): Promise<str
     }
 
     return rtcToken;
+};
+
+export const getRTMToken = async (userUUID: string): Promise<string> => {
+    // 查询是否存在 token
+    const rtmKey = RedisKey.agoraRTMUserToken(userUUID);
+    let rtmToken = await RedisService.get(rtmKey);
+
+    // 不存在就生成 token
+    if (rtmToken === null) {
+        rtmToken = generateRTMToken(userUUID);
+        await RedisService.set(rtmKey, rtmToken, 60 * 60 * 24 - 60);
+    }
+
+    return rtmToken;
 };
