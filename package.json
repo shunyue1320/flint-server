@@ -40,6 +40,7 @@
         "@types/lodash": "^4.14.188",
         "@types/uuid": "^8.3.4",
         "@web-server-userland/fastify-typeorm-query-runner": "^1.0.0",
+        "agora-access-token": "^2.0.4",
         "ajv": "^8.11.0",
         "awesome-phonenumber": "^3.4.0",
         "axios": "^1.1.3",

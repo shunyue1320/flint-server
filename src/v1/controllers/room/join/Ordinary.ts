@@ -3,7 +3,9 @@ import { EntityManager } from "typeorm";
 import { Status } from "../../../../constants/Project";
 import { ErrorCode } from "../../../../error/ErrorCode";
 import { RoomStatus } from "../../../../model/room/Constants";
+import { createWhiteboardRoomToken } from "../../../../utils/NetlessToken";
 import { RoomDAO, RoomUserDAO } from "../../../dao";
+import { getRTCToken } from "../../../utils/AgoraToken";
 
 export const joinOrdinary = async (
     DBTransaction: EntityManager,

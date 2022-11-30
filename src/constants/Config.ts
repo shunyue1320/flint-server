@@ -91,3 +91,8 @@ export const Whiteboard = {
     secretAccessKey: config.whiteboard.secret_access_key,
     convertRegion: config.whiteboard.convert_region,
 };
+
+export const Agora = {
+    appId: config.agora.app.id,
+    appCertificate: config.agora.app.certificate,
+};

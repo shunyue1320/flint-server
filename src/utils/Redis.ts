@@ -6,4 +6,6 @@ export const RedisKey = {
     phoneTryLoginCount: (phone: string): string => `phone:count:login:${phone}`,
     roomInviteCode: (inviteCode: string): string => `room:invite:${inviteCode}`,
     roomInviteCodeReverse: (roomUUID: string): string => `room:inviteReverse:${roomUUID}`,
+    agoraRTCRoomUserToken: (roomUUID: string, uid: string | number): string =>
+        `agora:rtc:room:${roomUUID}:uid:${uid}`,
 };

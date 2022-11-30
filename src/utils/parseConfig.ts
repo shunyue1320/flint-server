@@ -87,6 +87,12 @@ type Config = {
         secret_access_key: string;
         convert_region: "cn-hz" | "us-sv" | "sg" | "in-mum" | "gb-lon";
     };
+    agora: {
+        app: {
+            id: string;
+            certificate: string;
+        };
+    };
 };
 
 interface SMSConfig {
