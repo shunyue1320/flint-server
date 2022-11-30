@@ -70,10 +70,21 @@ const createToken = <T extends SdkTokenTags | RoomTokenTags>(
 
 const sdkToken = createToken<SdkTokenTags>(TokenPrefix.SDK);
 const taskToken = createToken<RoomTokenTags>(TokenPrefix.TASK);
+const roomToken = createToken<RoomTokenTags>(TokenPrefix.ROOM);
 
 export const createWhiteboardSDKToken = (lifespan = 1000 * 60 * 10): string => {
     return sdkToken(Whiteboard.accessKey, Whiteboard.secretAccessKey, lifespan, {
         role: TokenRole.Admin,
+    });
+};
+
+export const createWhiteboardRoomToken = (
+    whiteboardRoomUUID: string,
+    { readonly = false, lifespan = 0 }: { readonly?: boolean; lifespan?: number } = {},
+): string => {
+    return roomToken(Whiteboard.accessKey, Whiteboard.secretAccessKey, lifespan, {
+        uuid: whiteboardRoomUUID,
+        role: readonly ? TokenRole.Reader : TokenRole.Writer,
     });
 };
 
