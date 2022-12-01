@@ -4,7 +4,7 @@ import { RoomType } from "../../../../model/room/Constants";
 export type ResponseType = {
     roomType: RoomType;
     roomUUID: string;
-    owerUUID: string;
+    ownerUUID: string;
     whiteboardRoomToken: string;
     whiteboardRoomUUID: string;
     rtcUID: number;

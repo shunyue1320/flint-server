@@ -4,15 +4,18 @@ import { AGORA_SHARE_SCREEN_UID } from "../../../../constants/Agora";
 import { Status } from "../../../../constants/Project";
 import { ErrorCode } from "../../../../error/ErrorCode";
 import { RoomStatus } from "../../../../model/room/Constants";
+import { Response } from "../../../../types/Server";
 import { createWhiteboardRoomToken } from "../../../../utils/NetlessToken";
 import { RoomDAO, RoomUserDAO } from "../../../dao";
 import { getRTCToken, getRTMToken } from "../../../utils/AgoraToken";
+import { showGuide } from "./Utils";
+import { ResponseType } from "./Type";
 
 export const joinOrdinary = async (
     DBTransaction: EntityManager,
     roomUUID: string,
     userUUID: string,
-) => {
+): Promise<Response<ResponseType>> => {
     // 查找 rooms 表返回房间详情
     const roomInfo = await RoomDAO.findOne(
         DBTransaction,
@@ -55,7 +58,7 @@ export const joinOrdinary = async (
     if (roomUserInfo !== undefined) {
         rtcUID = roomUserInfo.rtc_uid;
     } else {
-        // 不存在 rtc_uid 就生成一个
+        // 不存在 rtc_uid 就生成，并添加一条 room_users 表记录
         rtcUID = cryptoRandomString({ length: 6, type: "numeric" });
 
         await RoomUserDAO.insert(
@@ -88,7 +91,9 @@ export const joinOrdinary = async (
             },
             rtmToken: await getRTMToken(userUUID),
             region: roomInfo.region,
-            showGuide: roomInfo.owner_uuid === userUUID && (await showGuide(userUUID, roomUUID)),
+            showGuide:
+                roomInfo.owner_uuid === userUUID &&
+                (await showGuide(DBTransaction, userUUID, roomUUID)),
         },
     };
 };
