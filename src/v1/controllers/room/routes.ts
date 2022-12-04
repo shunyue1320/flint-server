@@ -1,6 +1,7 @@
 import { Server } from "../../../utils/RegistryRouters";
 import { roomList, roomListSchema } from "./list";
 import { createOrdinary, createOrdinarySchema } from "../room/create/Ordinary";
+import { joinRoom, joinRoomSchema } from "../room/join";
 
 export const roomRouters = (server: Server): void => {
     // 房间列表
@@ -11,6 +12,11 @@ export const roomRouters = (server: Server): void => {
     // 创建房间
     server.post("room/create/ordinary", createOrdinary, {
         schema: createOrdinarySchema,
+        auth: true,
+    });
+    // 加入房间
+    server.post("room/join", joinRoom, {
+        schema: joinRoomSchema,
         auth: true,
     });
 };
