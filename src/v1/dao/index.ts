@@ -8,6 +8,7 @@ import { UserModel } from "../../model/user/User";
 import { UserWeChatModel } from "../../model/user/WeChat";
 import { RoomModel } from "../../model/room/Room";
 import { RoomUserModel } from "../../model/room/RoomUser";
+import { RoomRecordModel } from "../../model/room/RoomRecord";
 
 class DAO<M extends Model> {
     public constructor(private readonly model: EntityTarget<M>) {}
@@ -167,3 +168,4 @@ export const userPhoneDAO = new DAO(UserPhoneModel);
 export const userWeChatDAO = new DAO(UserWeChatModel);
 export const RoomDAO = new DAO(RoomModel);
 export const RoomUserDAO = new DAO(RoomUserModel);
+export const RoomRecordDAO = new DAO(RoomRecordModel);
