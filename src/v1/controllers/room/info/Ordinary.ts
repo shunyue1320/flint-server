@@ -100,7 +100,7 @@ export const ordinaryInfoRoom = async (
                 ownerName: userInfo.user_name,
                 hasRecord: !!recordInfo,
                 region,
-                inviteCode: await getInviteCode(periodicUUID || roomUUID, this.logger),
+                inviteCode: await getInviteCode(periodicUUID || roomUUID),
             },
         },
     };

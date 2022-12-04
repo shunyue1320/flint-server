@@ -3,6 +3,7 @@ import { roomList, roomListSchema } from "./list";
 import { createOrdinary, createOrdinarySchema } from "../room/create/Ordinary";
 import { joinRoom, joinRoomSchema } from "../room/join";
 import { ordinaryInfoRoom, ordinaryInfoRoomSchema } from "./info/Ordinary";
+import { userInfoRoom, userInfoRoomSchema } from "./info/Users";
 
 export const roomRouters = (server: Server): void => {
     // 房间列表
@@ -23,6 +24,11 @@ export const roomRouters = (server: Server): void => {
     // 普通的房间信息
     server.post("room/info/ordinary", ordinaryInfoRoom, {
         schema: ordinaryInfoRoomSchema,
+        auth: true,
+    });
+    // 批量查询用户信息
+    server.post("room/info/users", userInfoRoom, {
+        schema: userInfoRoomSchema,
         auth: true,
     });
 };
