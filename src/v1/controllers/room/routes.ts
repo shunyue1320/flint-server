@@ -4,6 +4,7 @@ import { createOrdinary, createOrdinarySchema } from "../room/create/Ordinary";
 import { joinRoom, joinRoomSchema } from "../room/join";
 import { ordinaryInfoRoom, ordinaryInfoRoomSchema } from "./info/Ordinary";
 import { userInfoRoom, userInfoRoomSchema } from "./info/Users";
+import { updateStatusStarted, updateStatusStartedSchema } from "./updateStatus/Started";
 
 export const roomRouters = (server: Server): void => {
     // 房间列表
@@ -29,6 +30,11 @@ export const roomRouters = (server: Server): void => {
     // 批量查询用户信息
     server.post("room/info/users", userInfoRoom, {
         schema: userInfoRoomSchema,
+        auth: true,
+    });
+    // 修改房间状态
+    server.post("room/update-status/started", updateStatusStarted, {
+        schema: updateStatusStartedSchema,
         auth: true,
     });
 };
