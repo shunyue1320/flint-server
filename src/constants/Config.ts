@@ -41,6 +41,12 @@ export const WeChat = {
     },
 };
 
+export const Github = {
+    enable: config.login.github.enable,
+    clientId: config.login.github.client_id,
+    clientSecret: config.login.github.client_secret,
+};
+
 export const PhoneSMS = {
     enable: config.login.sms.enable,
     testUsers: config.login.sms.test_users.map(user => {

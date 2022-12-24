@@ -6,6 +6,7 @@ import { Model } from "../../model";
 import { UserPhoneModel } from "../../model/user/Phone";
 import { UserModel } from "../../model/user/User";
 import { UserWeChatModel } from "../../model/user/WeChat";
+import { UserGithubModel } from "../../model/user/Github";
 import { RoomModel } from "../../model/room/Room";
 import { RoomUserModel } from "../../model/room/RoomUser";
 import { RoomRecordModel } from "../../model/room/RoomRecord";
@@ -166,6 +167,7 @@ class DAOUtils {
 export const userDAO = new DAO(UserModel);
 export const userPhoneDAO = new DAO(UserPhoneModel);
 export const userWeChatDAO = new DAO(UserWeChatModel);
+export const userGithubDAO = new DAO(UserGithubModel);
 export const RoomDAO = new DAO(RoomModel);
 export const RoomUserDAO = new DAO(RoomUserModel);
 export const RoomRecordDAO = new DAO(RoomRecordModel);

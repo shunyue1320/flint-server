@@ -26,6 +26,24 @@ log:
   filename: "{{DAY_DATE}}"
 
 login:
+  wechat:
+    web:
+      enable: false
+      app_id:
+      app_secret:
+    mobile:
+      enable: false
+      app_id:
+      app_secret:
+  github:
+    enable: false
+    client_id:
+    client_secret:
+  google:
+    enable: false
+    client_id:
+    client_secret:
+    redirect_uri:
   sms:
     enable: false
     force: false
