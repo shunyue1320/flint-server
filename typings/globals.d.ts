@@ -3,3 +3,8 @@ declare namespace NodeJS {
         NODE_ENV: "development" | "production";
     }
 }
+
+declare module "*.eta" {
+    const a: string;
+    export default a;
+}

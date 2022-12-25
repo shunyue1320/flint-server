@@ -10,6 +10,7 @@ import { ErrorCode } from "./error/ErrorCode";
 import { loggerServer, parseError } from "./logger";
 import fastifyTypeORMQueryRunner from "@web-server-userland/fastify-typeorm-query-runner";
 import { fastifyAuthenticate } from "./plugins/fastify/authenticate";
+import pointOfView from "@fastify/view";
 
 const app = fastify({
     caseSensitive: true,
@@ -47,7 +48,14 @@ app.get("/health-check", async (_req, reply) => {
 
 // orm: 连接好数据库后开启后端路由服务
 void orm().then(async dataSource => {
-    await Promise.all([app.register(fastifyAuthenticate)]);
+    await Promise.all([
+        app.register(pointOfView, {
+            engine: {
+                eta: require("eta"),
+            },
+        }),
+        app.register(fastifyAuthenticate),
+    ]);
 
     {
         const respErr = JSON.stringify({

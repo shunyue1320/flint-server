@@ -24,18 +24,18 @@ export const loginRouters = (server: Server): void => {
         schema: setAuthUUIDSchema,
         auth: false,
     });
-    // 微信扫码回调
+    // github授权登录回调
     server.get("login/github/callback", githubCallback, {
         schema: githubCallbackSchema,
         auth: false,
         enable: Github.enable,
+        autoHandle: false,
     });
     // 微信扫码回调
     server.get("login/weChat/web/callback", wechatWebCallback, {
         schema: wechatWebCallbackSchema,
         auth: false,
         enable: WeChat.web.enable,
-        autoHandle: false,
     });
     // 扫码成功后获取登录信息
     server.post("login/process", loginProcess, {

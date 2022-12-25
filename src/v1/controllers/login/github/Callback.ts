@@ -5,7 +5,7 @@ import { LoginPlatform } from "../../../../constants/Project";
 import { FastifyRequestTypebox } from "../../../../types/Server";
 import { GithubService } from "../../../services/user/UserGithub";
 import { LoginGithub } from "../platforms/LoginGithub";
-import { successHTML } from "../utils/callbackHTML";
+import callbackViewEta from "../templates/callback-view.eta";
 
 export const githubCallbackSchema = {
     querystring: Type.Object(
@@ -64,7 +64,10 @@ export const githubCallback = async (
         avatar: avatarURL,
     });
 
-    return reply.send(successHTML(platform !== "web"));
+    return await reply.view(callbackViewEta, {
+        title: "登录成功",
+        needLaunchApp: platform !== "web",
+    });
 };
 
 /** 断言回调参数无错误 */

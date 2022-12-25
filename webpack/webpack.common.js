@@ -1,5 +1,7 @@
 const paths = require("./paths");
 const nodeExternals = require("webpack-node-externals");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 module.exports = {
     entry: [paths.entryFile],
@@ -18,8 +20,28 @@ module.exports = {
                 ],
                 exclude: /node_modules/,
             },
+            {
+                test: /\.eta$/,
+                use: [
+                    {
+                        loader: "file-loader",
+                        options: {
+                            name: "[name]-[hash].[ext]",
+                            outputPath: "eta-templates",
+                            publicPath: "dist/eta-templates",
+                        },
+                    },
+                ],
+                exclude: /node_modules/,
+            },
         ],
     },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new ESLintPlugin({
+            fix: true,
+        }),
+    ],
     externals: [nodeExternals()], // 排除 node_modules 目录中所有模块
     resolve: {
         extensions: [".js", ".ts"],
