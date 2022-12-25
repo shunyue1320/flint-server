@@ -27,10 +27,6 @@ export const githubCallback = async (
     req: FastifyRequestTypebox<typeof githubCallbackSchema>,
     reply: FastifyReply,
 ): Promise<void> => {
-    void reply.headers({
-        "content-type": "text/html",
-    });
-
     const { state: authUUID, platform, code, error } = req.query;
 
     assertCallbackParamsNoError(error);

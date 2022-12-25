@@ -3,6 +3,7 @@ import { MySQL, isDev, isTest } from "../constants/Config";
 import { UserModel } from "../model/user/User";
 import { UserPhoneModel } from "../model/user/Phone";
 import { UserWeChatModel } from "../model/user/WeChat";
+import { UserGithubModel } from "../model/user/Github";
 import { RoomModel } from "../model/room/Room";
 import { RoomUserModel } from "../model/room/RoomUser";
 import { RoomRecordModel } from "../model/room/RoomRecord";
@@ -18,6 +19,7 @@ export const dataSource = new DataSource({
         UserModel,
         UserPhoneModel,
         UserWeChatModel,
+        UserGithubModel,
         RoomModel,
         RoomUserModel,
         RoomRecordModel,

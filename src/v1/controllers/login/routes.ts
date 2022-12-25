@@ -35,6 +35,7 @@ export const loginRouters = (server: Server): void => {
         schema: wechatWebCallbackSchema,
         auth: false,
         enable: WeChat.web.enable,
+        autoHandle: false,
     });
     // 扫码成功后获取登录信息
     server.post("login/process", loginProcess, {
