@@ -65,6 +65,11 @@ type Config = {
             client_id: string;
             client_secret: string;
         };
+        qq: {
+            enable: boolean;
+            client_id: string;
+            client_secret: string;
+        };
         sms: {
             enable: boolean;
             test_users: Array<{

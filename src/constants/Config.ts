@@ -47,6 +47,12 @@ export const Github = {
     clientSecret: config.login.github.client_secret,
 };
 
+export const QQ = {
+    enable: config.login.qq.enable,
+    clientId: config.login.qq.client_id,
+    clientSecret: config.login.qq.client_secret,
+};
+
 export const PhoneSMS = {
     enable: config.login.sms.enable,
     testUsers: config.login.sms.test_users.map(user => {

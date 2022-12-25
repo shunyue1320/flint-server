@@ -5,6 +5,7 @@ import { phoneLogin, phoneLoginSchema } from "./phone/Phone";
 import { setAuthUUID, setAuthUUIDSchema } from "./SetAuthUUID";
 import { githubCallback, githubCallbackSchema } from "./github/Callback";
 import { wechatWebCallback, wechatWebCallbackSchema } from "./weChat/web/Callback";
+import { qqCallback, qqCallbackSchema } from "./qq/Callback";
 import { loginProcess, loginProcessSchema } from "./Process";
 import { login, loginSchema } from "./Login";
 
@@ -27,6 +28,13 @@ export const loginRouters = (server: Server): void => {
     // github授权登录回调
     server.get("login/github/callback", githubCallback, {
         schema: githubCallbackSchema,
+        auth: false,
+        enable: Github.enable,
+        autoHandle: false,
+    });
+    // qq授权登录回调
+    server.get("login/qq/callback", qqCallback, {
+        schema: qqCallbackSchema,
         auth: false,
         enable: Github.enable,
         autoHandle: false,
