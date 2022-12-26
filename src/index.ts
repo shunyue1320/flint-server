@@ -12,6 +12,7 @@ import fastifyTypeORMQueryRunner from "@web-server-userland/fastify-typeorm-quer
 import { fastifyAuthenticate } from "./plugins/fastify/authenticate";
 import pointOfView from "@fastify/view";
 import { fastifyAPILogger } from "./plugins/fastify/api-logger";
+import cors from "@fastify/cors";
 
 const app = fastify({
     caseSensitive: true,
@@ -55,6 +56,12 @@ void orm().then(async dataSource => {
             },
         }),
         app.register(fastifyAuthenticate),
+        app.register(cors, {
+            methods: ["GET", "POST", "OPTIONS"],
+            allowedHeaders: ["Content-Type", "Authorization", "x-request-id", "x-session-id"],
+            maxAge: 100,
+            origin: process.env.NODE_ENV === "development" ? true : false,
+        }),
     ]);
 
     {

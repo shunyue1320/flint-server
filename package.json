@@ -36,6 +36,7 @@
     "dependencies": {
         "@alicloud/dysmsapi20170525": "^2.0.22",
         "@alicloud/openapi-client": "^0.4.3",
+        "@fastify/cors": "^8.2.0",
         "@fastify/jwt": "^6.3.3",
         "@fastify/type-provider-typebox": "^2.3.0",
         "@fastify/view": "^7.3.0",
