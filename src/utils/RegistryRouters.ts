@@ -3,6 +3,8 @@ import { Status } from "../constants/Project";
 import { FastifyInstance, FastifyRequestTypebox, Response } from "../types/Server";
 import { ErrorCode } from "../error/ErrorCode";
 import { FError } from "../error/ControllerError";
+import { parseError } from "../logger";
+import { kAPILogger } from "../plugins/fastify/api-logger";
 
 const registerRouters =
     (version: `v${number}`) =>
@@ -55,6 +57,8 @@ const registerRouters =
                                 resp = result as Response;
                             }
                         } catch (error) {
+                            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+                            req[kAPILogger].error("请求失败", parseError(error));
                             if (autoHandle) {
                                 resp = errorToResp(error as Error);
                             } else {

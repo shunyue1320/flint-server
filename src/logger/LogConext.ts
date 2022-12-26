@@ -27,3 +27,15 @@ export type LoggerBase = LoggerError & {
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type LoggerServer = LoggerBase & {};
+
+export type LoggerAPI = LoggerBase & {
+    requestPath: string;
+    routerMethod: string;
+    user: {
+        userUUID: string;
+        loginSource: string;
+        iat: number;
+        exp: number;
+    };
+    durationMS?: number;
+};

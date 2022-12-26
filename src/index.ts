@@ -11,6 +11,7 @@ import { loggerServer, parseError } from "./logger";
 import fastifyTypeORMQueryRunner from "@web-server-userland/fastify-typeorm-query-runner";
 import { fastifyAuthenticate } from "./plugins/fastify/authenticate";
 import pointOfView from "@fastify/view";
+import { fastifyAPILogger } from "./plugins/fastify/api-logger";
 
 const app = fastify({
     caseSensitive: true,
@@ -26,7 +27,6 @@ app.setErrorHandler((err, request, reply) => {
             status: Status.Failed,
             code: ErrorCode.ParamsCheckFailed,
         });
-
         return;
     }
 
@@ -71,6 +71,8 @@ void orm().then(async dataSource => {
             respIsError: respStr => respStr === respErr,
         });
     }
+
+    await app.register(fastifyAPILogger);
 
     // 挂载 v1 路由接口
     registerRoutersV1(app, v1Routers);
