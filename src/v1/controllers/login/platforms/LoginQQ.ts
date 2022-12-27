@@ -27,12 +27,12 @@ export class LoginQQ extends AbstractLogin {
         code: string,
     ): Promise<RegisterInfo & { accessToken: string }> {
         const accessToken = await LoginQQ.getToken(code);
-        const openUUID = await LoginQQ.getOpenIdByAPI(accessToken);
-        const userInfo = await LoginQQ.getUserInfoByAPI(accessToken, openUUID);
+        const uuidInfo = await LoginQQ.getUuidInfoByAPI(accessToken);
+        const userInfo = await LoginQQ.getUserInfoByAPI(accessToken, uuidInfo.openUUID);
 
         return {
-            openUUID,
             accessToken,
+            ...uuidInfo,
             ...userInfo,
         };
     }
@@ -46,12 +46,19 @@ export class LoginQQ extends AbstractLogin {
         return response.data.access_token;
     }
 
-    public static async getOpenIdByAPI(accessToken: string): Promise<string> {
-        const response = await ax.get<OpenUUID>(
-            `https://graph.qq.com/oauth2.0/me?access_token=${accessToken}&fmt=json`,
+    public static async getUuidInfoByAPI(accessToken: string): Promise<QUUIDInfo> {
+        const response = await ax.get<QQUUIDResponse | RequestFailed>(
+            `https://graph.qq.com/oauth2.0/me?access_token=${accessToken}&unionid=1&fmt=json`,
         );
 
-        return response.data.openid;
+        if ("error" in response.data) {
+            throw new Error(response.data.error);
+        }
+
+        return {
+            openUUID: response.data.openid,
+            unionUUID: response.data.unionid,
+        };
     }
 
     public static async getUserInfoByAPI(
@@ -81,6 +88,7 @@ interface RegisterInfo {
     userName: string;
     avatarURL: string;
     openUUID: string;
+    unionUUID: string;
     gender: Gender;
 }
 
@@ -88,8 +96,15 @@ interface AccessToken {
     access_token: string;
 }
 
-interface OpenUUID {
+interface QQUUIDResponse {
+    client_id: string;
     openid: string;
+    unionid: string;
+}
+
+interface QUUIDInfo {
+    openUUID: string;
+    unionUUID: string;
 }
 
 interface QQUserInfo {
@@ -102,4 +117,9 @@ interface QQUserResponse {
     nickname: string;
     figureurl_qq_1: string;
     gender: string;
+}
+
+interface RequestFailed {
+    error: string;
+    error_description: string;
 }

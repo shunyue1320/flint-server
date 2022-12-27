@@ -35,7 +35,7 @@ export const qqCallback = async (
 
     const userInfo = await LoginQQ.getUserInfoAndToken(code);
 
-    const userUUIDByDB = await QQService.userUUIDByUnionUUID(req.DBTransaction, userInfo.openUUID);
+    const userUUIDByDB = await QQService.userUUIDByUnionUUID(req.DBTransaction, userInfo.unionUUID);
 
     const userUUID = userUUIDByDB || v4();
 

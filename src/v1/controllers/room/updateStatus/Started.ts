@@ -2,7 +2,7 @@ import { Type } from "@sinclair/typebox";
 import { Status } from "../../../../constants/Project";
 import { ErrorCode } from "../../../../error/ErrorCode";
 import { RoomStatus } from "../../../../model/room/Constants";
-import { FastifyRequestTypebox } from "../../../../types/Server";
+import { FastifyRequestTypebox, Response } from "../../../../types/Server";
 import { RoomDAO } from "../../../dao";
 
 export const updateStatusStartedSchema = {
@@ -20,7 +20,7 @@ export const updateStatusStartedSchema = {
 
 export const updateStatusStarted = async (
     req: FastifyRequestTypebox<typeof updateStatusStartedSchema>,
-) => {
+): Promise<Response<ResponseType>> => {
     const userUUID = req.userUUID;
     const { roomUUID } = req.body;
 
@@ -74,3 +74,5 @@ export const updateStatusStarted = async (
         data: {},
     };
 };
+
+interface ResponseType {}
