@@ -55,7 +55,7 @@ export const joinOrdinary = async (
         user_uuid: userUUID,
     });
 
-    if (roomUserInfo !== undefined) {
+    if (roomUserInfo !== null) {
         rtcUID = roomUserInfo.rtc_uid;
     } else {
         // 不存在 rtc_uid 就生成，并添加一条 room_users 表记录

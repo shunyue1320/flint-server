@@ -60,6 +60,7 @@ void orm().then(async dataSource => {
             methods: ["GET", "POST", "OPTIONS"],
             allowedHeaders: ["Content-Type", "Authorization", "x-request-id", "x-session-id"],
             maxAge: 100,
+            hook: "preHandler",
             origin: process.env.NODE_ENV === "development" ? true : false,
         }),
     ]);
