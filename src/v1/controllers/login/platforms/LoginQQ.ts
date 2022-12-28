@@ -46,7 +46,7 @@ export class LoginQQ extends AbstractLogin {
         return response.data.access_token;
     }
 
-    public static async getUuidInfoByAPI(accessToken: string): Promise<QUUIDInfo> {
+    public static async getUuidInfoByAPI(accessToken: string): Promise<QQUUIDInfo> {
         const response = await ax.get<QQUUIDResponse | RequestFailed>(
             `https://graph.qq.com/oauth2.0/me?access_token=${accessToken}&unionid=1&fmt=json`,
         );
@@ -102,7 +102,7 @@ interface QQUUIDResponse {
     unionid: string;
 }
 
-interface QUUIDInfo {
+interface QQUUIDInfo {
     openUUID: string;
     unionUUID: string;
 }

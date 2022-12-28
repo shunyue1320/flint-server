@@ -1,5 +1,5 @@
 import { Server } from "../../../utils/RegistryRouters";
-import { PhoneSMS, WeChat, Github } from "../../../constants/Config";
+import { PhoneSMS, WeChat, Github, QQ } from "../../../constants/Config";
 import { sendMessage, sendMessageSchema } from "./phone/SendMessage";
 import { phoneLogin, phoneLoginSchema } from "./phone/Phone";
 import { setAuthUUID, setAuthUUIDSchema } from "./SetAuthUUID";
@@ -36,7 +36,7 @@ export const loginRouters = (server: Server): void => {
     server.get("login/qq/callback", qqCallback, {
         schema: qqCallbackSchema,
         auth: false,
-        enable: Github.enable,
+        enable: QQ.enable,
         autoHandle: false,
     });
     // 微信扫码回调
