@@ -65,7 +65,7 @@ export class LoginWechat extends AbstractLogin {
         };
     }
 
-    public static async wechatRequest<T>(url: string): Promise<T> {
+    public static async wechatRequest<T extends object>(url: string): Promise<T> {
         const response: AxiosResponse<T | WeChatRequestFailed> = await ax.get(url);
         if ("errmsg" in response.data) {
             throw new Error(response.data.errmsg);

@@ -27,7 +27,7 @@ export class LoginQQ extends AbstractLogin {
         code: string,
     ): Promise<RegisterInfo & { accessToken: string }> {
         const accessToken = await LoginQQ.getToken(code);
-        const uuidInfo = await LoginQQ.getUuidInfoByAPI(accessToken);
+        const uuidInfo = await LoginQQ.getUUIDByAPI(accessToken);
         const userInfo = await LoginQQ.getUserInfoByAPI(accessToken, uuidInfo.openUUID);
 
         return {
@@ -46,7 +46,7 @@ export class LoginQQ extends AbstractLogin {
         return response.data.access_token;
     }
 
-    public static async getUuidInfoByAPI(accessToken: string): Promise<QQUUIDInfo> {
+    public static async getUUIDByAPI(accessToken: string): Promise<QQUUIDInfo> {
         const response = await ax.get<QQUUIDResponse | RequestFailed>(
             `https://graph.qq.com/oauth2.0/me?access_token=${accessToken}&unionid=1&fmt=json`,
         );
@@ -69,11 +69,15 @@ export class LoginQQ extends AbstractLogin {
             `https://graph.qq.com/user/get_user_info?access_token=${accessToken}&oauth_consumer_key=${QQ.clientId}&openid=${openUUID}`,
         );
 
-        const { nickname, figureurl_qq_1, gender } = response.data;
+        const { ret, nickname, figureurl_qq_1, figureurl_qq_2, gender } = response.data;
+
+        if (ret !== 0) {
+            throw new Error(String(ret));
+        }
 
         return {
             userName: nickname,
-            avatarURL: figureurl_qq_1,
+            avatarURL: figureurl_qq_2 || figureurl_qq_1,
             gender: gender === "男" ? Gender["Man"] : Gender["Woman"],
         };
     }
@@ -93,7 +97,7 @@ interface RegisterInfo {
 }
 
 interface AccessToken {
-    access_token: string;
+    readonly access_token: string;
 }
 
 interface QQUUIDResponse {
@@ -114,12 +118,15 @@ interface QQUserInfo {
 }
 
 interface QQUserResponse {
-    nickname: string;
-    figureurl_qq_1: string;
-    gender: string;
+    readonly ret: number;
+    readonly msg: string;
+    readonly nickname: string;
+    readonly figureurl_qq_1: string;
+    readonly figureurl_qq_2: string;
+    readonly gender: "男" | "女";
 }
 
 interface RequestFailed {
-    error: string;
-    error_description: string;
+    readonly error: string;
+    readonly error_description: string;
 }
